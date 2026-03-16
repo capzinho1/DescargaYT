@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { execSync } from "child_process";
+import path from "path";
 
 export async function POST(request) {
   try {
@@ -10,11 +11,13 @@ export async function POST(request) {
       return NextResponse.json({ error: "URL no proporcionada" }, { status: 400 });
     }
 
-    // Añadimos un "User-Agent" para parecer un navegador real y evitar el bloqueo de bot
     const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
     
-    // Comando con User-Agent y bypass de restricciones geográficas básicas
-    const command = `.yt-dlp "${url}" --dump-single-json --no-warnings --no-check-certificates --user-agent "${userAgent}" --geo-bypass`;
+    // 1. Buscamos la ruta absoluta y exacta donde Railway guardó yt-dlp
+    const ytdlpPath = path.join(process.cwd(), 'yt-dlp');
+    
+    // 2. Usamos esa ruta exacta en el comando
+    const command = `"${ytdlpPath}" "${url}" --dump-single-json --no-warnings --no-check-certificates --user-agent "${userAgent}" --geo-bypass`;
     
     const output = execSync(command).toString();
     const videoInfo = JSON.parse(output);
@@ -27,18 +30,10 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    console.error("Error real:", error.message);
-    
-    // Si sigue fallando por bot, daremos un mensaje más específico
-    if (error.message.includes("confirm you’re not a bot")) {
-      return NextResponse.json(
-        { error: "YouTube bloqueó la conexión temporalmente. Intenta con otro video o espera unos minutos." }, 
-        { status: 403 }
-      );
-    }
-
+    // 3. Capturamos el error REAL y lo enviamos a tu pantalla para leerlo
+    console.error("Error en Railway:", error.message);
     return NextResponse.json(
-      { error: "Error al procesar el video." }, 
+      { error: "Detalle del error: " + error.message }, 
       { status: 500 }
     );
   }
