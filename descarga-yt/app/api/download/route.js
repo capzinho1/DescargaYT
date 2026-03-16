@@ -12,11 +12,9 @@ export async function POST(request) {
     }
 
     const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
-    
-    // 1. Buscamos la ruta absoluta y exacta donde Railway guardó yt-dlp
     const ytdlpPath = path.join(process.cwd(), 'yt-dlp');
     
-    // 2. Usamos esa ruta exacta en el comando
+    // Comando simple para extraer el JSON
     const command = `"${ytdlpPath}" "${url}" --dump-single-json --no-warnings --no-check-certificates --user-agent "${userAgent}" --geo-bypass`;
     
     const output = execSync(command).toString();
@@ -30,7 +28,6 @@ export async function POST(request) {
     });
 
   } catch (error) {
-    // 3. Capturamos el error REAL y lo enviamos a tu pantalla para leerlo
     console.error("Error en Railway:", error.message);
     return NextResponse.json(
       { error: "Detalle del error: " + error.message }, 

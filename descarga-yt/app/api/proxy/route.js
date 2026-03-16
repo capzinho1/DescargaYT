@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
-  // 1. Recibimos el enlace directo oculto que nos manda el botón
   const searchParams = request.nextUrl.searchParams;
   const urlDirecta = searchParams.get("url");
 
@@ -10,10 +9,10 @@ export async function GET(request) {
   }
 
   try {
-    // 2. Railway descarga el video desde YouTube (usando su IP autorizada)
+    // Railway descarga el video desde el link directo
     const response = await fetch(urlDirecta);
 
-    // 3. Railway te pasa el video a ti como si fuera un tubo continuo
+    // Te lo envía a ti como un archivo descargable
     return new NextResponse(response.body, {
       headers: {
         "Content-Type": response.headers.get("Content-Type") || "video/mp4",

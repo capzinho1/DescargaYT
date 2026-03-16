@@ -46,7 +46,6 @@ export default function Home() {
       <div className="w-full max-w-xl bg-slate-900 border border-slate-800 rounded-3xl shadow-2xl p-8 sm:p-10">
         
         <div className="flex flex-col items-center mb-8 text-center">
-          {/* El contenedor padre tiene el color text-red-500, el ícono lo hereda */}
           <div className="bg-red-500/10 p-4 rounded-full mb-5 text-red-500">
             <MdSmartDisplay size={56} />
           </div>
@@ -77,7 +76,6 @@ export default function Home() {
               </span>
             ) : (
               <>
-                {/* Usamos size={24} en lugar de w-6 h-6 */}
                 <MdDownload size={24} />
                 <span>Obtener Video</span>
               </>
@@ -107,13 +105,12 @@ export default function Home() {
               </h3>
               
               <a
-                // AQUÍ ESTÁ EL CAMBIO: Mandamos el link a nuestro propio proxy
+                // Aquí usamos el proxy simple sin FFmpeg
                 href={`/api/proxy?url=${encodeURIComponent(videoData.enlaceDirecto)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full mt-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-900/20"
               >
-                {/* Usamos size={20} en lugar de w-5 h-5 */}
                 <MdDownload size={20} />
                 Guardar Archivo en mi PC
               </a>
