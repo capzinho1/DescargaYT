@@ -14,7 +14,7 @@ export async function POST(request) {
     const userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
     
     // Comando con User-Agent y bypass de restricciones geográficas básicas
-    const command = `yt-dlp "${url}" --dump-single-json --no-warnings --no-check-certificates --user-agent "${userAgent}" --geo-bypass`;
+    const command = `.yt-dlp "${url}" --dump-single-json --no-warnings --no-check-certificates --user-agent "${userAgent}" --geo-bypass`;
     
     const output = execSync(command).toString();
     const videoInfo = JSON.parse(output);
