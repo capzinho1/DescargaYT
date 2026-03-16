@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["...", "python3", "ffmpeg"]
+
+[phases.build]
+cmds = ["npm install", "npm run build"]
+
+[phases.install_ytdlp]
+dependsOn = ["setup"]
+cmds = ["curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp", "chmod a+rx /usr/local/bin/yt-dlp"]
+
+[start]
+cmd = "npm run start"
