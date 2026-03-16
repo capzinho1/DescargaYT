@@ -107,7 +107,8 @@ export default function Home() {
               </h3>
               
               <a
-                href={videoData.enlaceDirecto}
+                // AQUÍ ESTÁ EL CAMBIO: Mandamos el link a nuestro propio proxy
+                href={`/api/proxy?url=${encodeURIComponent(videoData.enlaceDirecto)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full mt-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-900/20"
